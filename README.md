@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ### 3 分钟了解如何进入开发
 
 欢迎使用云效代码管理 Codeup，通过阅读以下内容，你可以快速熟悉 Codeup ，并立即开始今天的工作。
@@ -36,3 +37,6 @@ Codeup 支持两种方式进行代码提交：网页端提交，以及本地 Git
 ### 更多
 
 Git 使用教学、高级功能指引等更多说明，参见[Codeup帮助文档](https://help.aliyun.com/document_detail/153402.html)。
+=======
+# IntelligenceGarden
+>>>>>>> 3c72d58 (Initial commit)
