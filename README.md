@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ### 3 分钟了解如何进入开发
 
 欢迎使用云效代码管理 Codeup，通过阅读以下内容，你可以快速熟悉 Codeup ，并立即开始今天的工作。
@@ -40,3 +41,6 @@ Git 使用教学、高级功能指引等更多说明，参见[Codeup帮助文档
 =======
 # IntelligenceGarden
 >>>>>>> 3c72d58 (Initial commit)
+=======
+# IntelligenceGarden
+>>>>>>> 3c72d5820094d54314d1bc6bca76e6814b2593e0

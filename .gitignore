@@ -95,8 +95,11 @@ ipython_config.py
 #Pipfile.lock
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 =======
+=======
+>>>>>>> 3c72d5820094d54314d1bc6bca76e6814b2593e0
 # UV
 #   Similar to Pipfile.lock, it is generally recommended to include uv.lock in version control.
 #   This is especially recommended for binary packages to ensure reproducibility, and is more
@@ -121,7 +124,10 @@ ipython_config.py
 .pdm-build/
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
+<<<<<<< HEAD
 >>>>>>> 3c72d58 (Initial commit)
+=======
+>>>>>>> 3c72d5820094d54314d1bc6bca76e6814b2593e0
 __pypackages__/
 
 # Celery stuff
@@ -164,7 +170,10 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 3c72d5820094d54314d1bc6bca76e6814b2593e0
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
@@ -178,4 +187,7 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+<<<<<<< HEAD
 >>>>>>> 3c72d58 (Initial commit)
+=======
+>>>>>>> 3c72d5820094d54314d1bc6bca76e6814b2593e0
