@@ -1,0 +1,6 @@
+FastAPI
+pydantic
+celery
+taos
+redis
+uvicorn
