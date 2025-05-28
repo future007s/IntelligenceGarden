@@ -1,0 +1,11 @@
+fastapi>=0.103.1
+pydantic>=2.4.0
+celery>=5.3.4
+taospy>=2.3.0  # 推荐使用taospy替代taos包
+redis>=4.6.0
+uvicorn>=0.23.2
+python-multipart>=0.0.6  # 用于处理表单和文件上传
+typing-extensions>=4.8.0  # Python 3.12兼容性
+paho-mqtt  # MQTT客户端
+pymysql>=1.0.2  # MySQL连接
+sqlalchemy>=2.0.0  # ORM

@@ -1,0 +1,106 @@
+version: '3.8'
+
+services:
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8003:8003' # FastAPI端口
+    depends_on:
+      - redis
+      - tdengine
+      - mosquitto
+      - mysql
+    environment:
+      - TDENGINE_HOST=tdengine
+      - TDENGINE_USER=root
+      - TDENGINE_PASS=taosdata
+      - TDENGINE_DB=farm_db
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_USER=root
+      - MYSQL_PASS=870803
+      - MYSQL_DB=farm_info
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - MQTT_HOST=mosquitto
+      - MQTT_PORT=1883
+    restart: unless-stopped
+    networks:
+      - farm-network
+
+  mysql:
+    image: 'mysql:8.0'
+    ports:
+      - '13306:3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=870803
+      - MYSQL_DATABASE=farm_info
+      - TZ=Asia/Shanghai
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: unless-stopped
+    networks:
+      - farm-network
+
+  # 其他服务保持不变
+  redis:
+    image: 'redis:alpine'
+    ports:
+      - '16379:6379'
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    networks:
+      - farm-network
+
+  tdengine:
+    image: 'tdengine/tdengine:latest'
+    ports:
+      - '6030:6030' # TDengine服务端口
+      - '6041:6041' # TDengine REST API端口
+    volumes:
+      - tdengine-data:/var/lib/taos
+    environment:
+      - TZ=Asia/Shanghai
+    restart: unless-stopped
+    networks:
+      - farm-network
+
+  mosquitto:
+    image: 'eclipse-mosquitto:latest'
+    ports:
+      - '1883:1883' # MQTT端口
+      - '9001:9001' # MQTT WebSocket端口
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - mosquitto-data:/mosquitto/data
+      - mosquitto-log:/mosquitto/log
+    restart: unless-stopped
+    networks:
+      - farm-network
+
+  prometheus:
+    image: 'prom/prometheus:latest'
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    networks:
+      - farm-network
+
+networks:
+  farm-network:
+    driver: bridge
+
+volumes:
+  redis-data:
+  tdengine-data:
+  mosquitto-data:
+  mosquitto-log:
+  prometheus-data:
+  mysql-data:

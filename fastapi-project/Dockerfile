@@ -12,8 +12,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the application code
 COPY app/ .
 
-# Expose the port the app runs on
+# Copy the startup script and make it executable
+COPY start.sh .
+RUN chmod +x start.sh
+
+# Expose the FastAPI port
 EXPOSE 8003
 
 # Command to run the application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8003", "--reload"]
+CMD ["./start.sh"]
