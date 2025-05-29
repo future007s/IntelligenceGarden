@@ -1,5 +1,9 @@
+FROM tdengine/tdengine:3.0.5.0 as tdengine
 FROM python:3.12.6
-
+# 从TDengine镜像复制客户端库
+COPY --from=tdengine /usr/local/taos/driver/ /usr/local/taos/driver/
+COPY --from=tdengine /usr/lib/libtaos.so.* /usr/lib/
+RUN ldconfig
 # Set the working directory
 WORKDIR /app
 

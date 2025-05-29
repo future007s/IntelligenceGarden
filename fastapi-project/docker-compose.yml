@@ -1,7 +1,6 @@
-version: '3.8'
-
 services:
   fastapi:
+    container_name: server
     build:
       context: .
       dockerfile: Dockerfile
@@ -26,11 +25,14 @@ services:
       - REDIS_PORT=6379
       - MQTT_HOST=mosquitto
       - MQTT_PORT=1883
+      - MQTT_USERNAME=farm_user
+      - MQTT_PASSWORD=870803
     restart: unless-stopped
     networks:
       - farm-network
 
   mysql:
+    container_name: mysql
     image: 'mysql:8.0'
     ports:
       - '13306:3306'
@@ -58,6 +60,7 @@ services:
       - farm-network
 
   tdengine:
+    container_name: tdengine
     image: 'tdengine/tdengine:latest'
     ports:
       - '6030:6030' # TDengine服务端口
@@ -71,6 +74,7 @@ services:
       - farm-network
 
   mosquitto:
+    container_name: mqtt
     image: 'eclipse-mosquitto:latest'
     ports:
       - '1883:1883' # MQTT端口
@@ -84,6 +88,7 @@ services:
       - farm-network
 
   prometheus:
+    container_name: prometheus
     image: 'prom/prometheus:latest'
     ports:
       - '9090:9090'

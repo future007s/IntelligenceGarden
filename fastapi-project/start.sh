@@ -23,6 +23,12 @@ if [ -f "tasks.py" ]; then
     sed -i "s/MYSQL_DB = \"farm_info\"/MYSQL_DB = \"${MYSQL_DB:-farm_info}\"/g" tasks.py
 fi
 
+# MQTT环境变量
+sed -i "s/MQTT_BROKER = \"mosquitto\"/MQTT_BROKER = \"${MQTT_HOST:-mosquitto}\"/g" mqtt_handler.py
+sed -i "s/MQTT_PORT = 1883/MQTT_PORT = ${MQTT_PORT:-1883}/g" mqtt_handler.py
+sed -i "s/MQTT_USERNAME = \"farm_user\"/MQTT_USERNAME = \"${MQTT_USERNAME:-farm_user}\"/g" mqtt_handler.py
+sed -i "s/MQTT_PASSWORD = \"secure_password\"/MQTT_PASSWORD = \"${MQTT_PASSWORD:-secure_password}\"/g" mqtt_handler.py
+
 echo "环境变量配置完成"
 
 echo "正在启动 Celery worker..."

@@ -15,6 +15,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger("mqtt-handler")
 
+# 添加MQTT认证信息
+MQTT_USERNAME = "farm_user"  # 环境变量中配置
+MQTT_PASSWORD = "secure_password"  # 环境变量中配置
 # MQTT服务器配置
 MQTT_BROKER = "mosquitto"  # Docker网络中的mosquitto服务名称
 MQTT_PORT = 1883
@@ -153,6 +156,9 @@ def on_disconnect(client, userdata, rc):
 # 创建和配置MQTT客户端
 def create_mqtt_client():
     client = mqtt.Client(client_id=MQTT_CLIENT_ID)
+
+    # 添加用户名密码认证
+    client.username_pw_set(username=MQTT_USERNAME, password=MQTT_PASSWORD)
 
     # 设置回调函数
     client.on_connect = on_connect
