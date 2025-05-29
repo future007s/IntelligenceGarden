@@ -10,6 +10,7 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from typing import List, Dict, Any, Optional
+import os
 
 # 配置日志
 logging.basicConfig(
@@ -55,8 +56,11 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# Celery配置
-celery = Celery("tasks", broker="redis://localhost:6379/0")
+REDIS_HOST = os.environ.get("REDIS_HOST", "localhost")
+REDIS_PORT = os.environ.get("REDIS_PORT", "6379")
+
+# 修改Celery配置使用环境变量
+celery = Celery("tasks", broker=f"redis://{REDIS_HOST}:{REDIS_PORT}/0")
 
 
 # 数据模型
