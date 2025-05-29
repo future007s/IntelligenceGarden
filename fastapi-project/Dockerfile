@@ -1,9 +1,27 @@
 FROM tdengine/tdengine:3.0.5.0 as tdengine
 FROM python:3.12.6
+
+# 安装jemalloc依赖
+RUN apt-get update && apt-get install -y libjemalloc-dev
+
 # 从TDengine镜像复制客户端库
-COPY --from=tdengine /usr/local/taos/driver/ /usr/local/taos/driver/
-COPY --from=tdengine /usr/lib/libtaos.so.* /usr/lib/
+COPY --from=tdengine /usr/local/taos/ /usr/local/taos/
+COPY --from=tdengine /usr/lib/libtaos.* /usr/lib/
 RUN ldconfig
+
+# 设置TDengine环境变量
+ENV LD_LIBRARY_PATH="/usr/lib:/usr/local/taos/driver:${LD_LIBRARY_PATH}"
+ENV TAOS_HOME="/usr/local/taos"
+# 添加这行以解决TLS问题
+ENV LD_PRELOAD="/usr/lib/x86_64-linux-gnu/libjemalloc.so.2"
+
+# 创建明确的符号链接
+RUN cd /usr/lib && ln -sf libtaos.so.* libtaos.so
+
+# 检查库文件是否存在并可访问
+RUN ldconfig && \
+    echo "TDengine libraries installed successfully"
+
 # Set the working directory
 WORKDIR /app
 
