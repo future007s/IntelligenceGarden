@@ -106,7 +106,6 @@ def get_taos_conn():
             user=TDENGINE_USER,
             password=TDENGINE_PASS,
             port=6030,  # 显式指定TDengine端口
-            config="/etc/taos",  # 指定配置目录
             timezone="Asia/Shanghai",  # 明确时区
         )
     except Exception as e:
