@@ -3,6 +3,7 @@ import taos
 import logging
 import time
 from datetime import datetime
+import os
 
 # 配置日志
 logging.basicConfig(
@@ -12,14 +13,17 @@ logging.basicConfig(
 )
 logger = logging.getLogger("celery-tasks")
 
-# TDengine连接配置
-TDENGINE_HOST = "localhost"
-TDENGINE_USER = "root"
-TDENGINE_PASS = "taosdata"
-TDENGINE_DB = "farm_db"
+# 修改为从环境变量获取
+TDENGINE_HOST = os.environ.get("TDENGINE_HOST", "localhost")
+TDENGINE_USER = os.environ.get("TDENGINE_USER", "root")
+TDENGINE_PASS = os.environ.get("TDENGINE_PASS", "taosdata")
+TDENGINE_DB = os.environ.get("TDENGINE_DB", "farm_db")
 
-# 创建Celery应用
-celery_app = Celery("tasks", broker="redis://localhost:6379/0")
+REDIS_HOST = os.environ.get("REDIS_HOST", "localhost")
+REDIS_PORT = os.environ.get("REDIS_PORT", "6379")
+
+# 修改Celery配置使用环境变量
+celery_app = Celery("tasks", broker=f"redis://{REDIS_HOST}:{REDIS_PORT}/0")
 
 # 配置Celery
 celery_app.conf.update(
@@ -33,6 +37,7 @@ celery_app.conf.update(
 
 # 初始化TDengine连接
 def get_taos_conn():
+    # 确保这里使用的是环境变量中的值
     return taos.connect(
         host=TDENGINE_HOST,
         user=TDENGINE_USER,
