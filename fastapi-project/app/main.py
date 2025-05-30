@@ -145,9 +145,7 @@ def init_db():
     conn = get_taos_conn()
     try:
         # 创建数据库
-        conn.execute(
-            f"CREATE DATABASE IF NOT EXISTS {TDENGINE_DB} KEEP 365 DAYS 30 BLOCKS 6 UPDATE 1"
-        )
+        conn.execute(f"CREATE DATABASE IF NOT EXISTS {TDENGINE_DB}")
         conn.execute(f"USE {TDENGINE_DB}")
 
         # 创建超级表（模板）
