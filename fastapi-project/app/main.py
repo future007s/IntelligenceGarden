@@ -139,7 +139,6 @@ def get_mysql_conn():
         raise HTTPException(status_code=500, detail=f"MySQL连接失败: {str(e)}")
 
 
-@app.on_event("startup")
 def init_db():
     # 初始化TDengine
     conn = get_taos_conn()
