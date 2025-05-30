@@ -102,7 +102,12 @@ class SensorInfo(BaseModel):
 def get_taos_conn():
     try:
         return taos.connect(
-            host=TDENGINE_HOST, user=TDENGINE_USER, password=TDENGINE_PASS
+            host=TDENGINE_HOST,
+            user=TDENGINE_USER,
+            password=TDENGINE_PASS,
+            port=6030,  # 显式指定TDengine端口
+            config="/etc/taos",  # 指定配置目录
+            timezone="Asia/Shanghai",  # 明确时区
         )
     except Exception as e:
         logger.error(f"连接TDengine失败: {str(e)}")
