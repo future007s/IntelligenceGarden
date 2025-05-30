@@ -58,9 +58,13 @@ Base = declarative_base()
 
 REDIS_HOST = os.environ.get("REDIS_HOST", "localhost")
 REDIS_PORT = os.environ.get("REDIS_PORT", "6379")
+REDIS_PASSWORD = os.environ.get("REDIS_PASSWORD", "")
+
+# Redis URL格式：redis://[:password@]host[:port][/database]
+redis_url = f"redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/0"
 
 # 修改Celery配置使用环境变量
-celery = Celery("tasks", broker=f"redis://{REDIS_HOST}:{REDIS_PORT}/0")
+celery = Celery("tasks", broker=redis_url)
 
 
 # 数据模型
