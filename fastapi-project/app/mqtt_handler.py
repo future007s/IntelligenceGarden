@@ -3,6 +3,7 @@ import json
 import logging
 import time
 import taos
+import os
 
 # 引入配置常量
 from main import TDENGINE_HOST, TDENGINE_USER, TDENGINE_PASS, TDENGINE_DB, celery
@@ -16,11 +17,10 @@ logging.basicConfig(
 logger = logging.getLogger("mqtt-handler")
 
 # 添加MQTT认证信息
-MQTT_USERNAME = "farm_user"  # 环境变量中配置
-MQTT_PASSWORD = "secure_password"  # 环境变量中配置
-# MQTT服务器配置
-MQTT_BROKER = "mosquitto"  # Docker网络中的mosquitto服务名称
-MQTT_PORT = 1883
+MQTT_USERNAME = os.environ.get("MQTT_USERNAME", "farm_user")
+MQTT_PASSWORD = os.environ.get("MQTT_PASSWORD", "secure_password")
+MQTT_BROKER = os.environ.get("MQTT_HOST", "mosquitto")
+MQTT_PORT = int(os.environ.get("MQTT_PORT", "1883"))
 MQTT_TOPIC = "farm/sensors/#"  # 订阅所有传感器数据的主题
 MQTT_CLIENT_ID = f"farm-server-{int(time.time())}"  # 唯一的客户端ID
 MQTT_QOS = 1  # QoS等级1，确保消息至少被传递一次

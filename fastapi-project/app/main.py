@@ -36,17 +36,17 @@ app.add_middleware(
 )
 
 # TDengine连接配置
-TDENGINE_HOST = "localhost"
-TDENGINE_USER = "root"
-TDENGINE_PASS = "taosdata"
-TDENGINE_DB = "farm_db"
+TDENGINE_HOST = os.environ.get("TDENGINE_HOST", "localhost")
+TDENGINE_USER = os.environ.get("TDENGINE_USER", "root")
+TDENGINE_PASS = os.environ.get("TDENGINE_PASS", "taosdata")
+TDENGINE_DB = os.environ.get("TDENGINE_DB", "farm_db")
 
 # MySQL连接配置
-MYSQL_HOST = "localhost"
-MYSQL_PORT = 3306
-MYSQL_USER = "root"
-MYSQL_PASS = "password"  # 根据实际情况修改
-MYSQL_DB = "farm_info"
+MYSQL_HOST = os.environ.get("MYSQL_HOST", "localhost")
+MYSQL_PORT = int(os.environ.get("MYSQL_PORT", "3306"))
+MYSQL_USER = os.environ.get("MYSQL_USER", "root")
+MYSQL_PASS = os.environ.get("MYSQL_PASS", "password")
+MYSQL_DB = os.environ.get("MYSQL_DB", "farm_info")
 
 # SQLAlchemy设置
 SQLALCHEMY_DATABASE_URL = (
